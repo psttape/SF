@@ -1,0 +1,250 @@
+<!DOCTYPE html> 
+<html>
+<head>
+<meta charset="utf-8">
+<title>jQuery Mobile Web App</title>
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+<script src="js/microgear.js"></script>
+
+<script>
+  const APPID     = "Nextgenfarm";
+  const APPKEY    = "SQcVvFssnEGjYn1";
+  const APPSECRET = "vBDtCCUbYzRWli8BaoOoZR0tP";
+
+    var microgear = Microgear.create({
+        key: APPKEY,
+        secret: APPSECRET,
+        //alias : "myhtml"         /*  optional  */
+    });
+    function Light_on(){
+            microgear.chat("Back_end_py","Light_ON");
+    }
+    function Light_off(){
+            microgear.chat("Back_end_py","Light_OFF");
+    }
+    function Fan_on(){
+            microgear.chat("Back_end_py","Fan_ON");
+    }
+    function Fan_off(){
+            microgear.chat("Back_end_py","Fan_OFF");
+    }
+    microgear.on('message',function(topic,msg) {
+        document.getElementById("data").innerHTML = msg;
+    });
+
+    microgear.on('connected', function() {
+        microgear.setname('manual_control');    /* alias can be renamed anytime with this function */
+        document.getElementById("data").innerHTML = "Now I am connected with netpie...";
+        setInterval(function() {
+            microgear.chat("Back_end_py","Hello from myself ");
+        },5000);
+    });
+
+    microgear.on('present', function(event) {
+        console.log(event);
+    });
+
+    microgear.on('absent', function(event) {
+        console.log(event);
+    });
+
+    microgear.connect(APPID);
+</script>
+<style>
+#test {
+font-size:36px;
+text-align:center;
+font-family:"Times New Roman", Times, serif;
+}
+#cent {
+  text-align: center;
+}
+#showdata {
+  font-size:20px;
+}
+#back{
+  background-color:#FFFFCC;
+}
+#back1{
+  background-color: #FFFF99;
+  border-width: 10px;
+}
+#back2{
+  background-color: #FFFFFF;
+}
+</style>
+</head> 
+
+<!--*************FIRST PAGE*****************-->
+
+<body> 
+<div data-role="page" id="page1" >
+<div data-role="content" class="ui-content">
+      <p>&nbsp;</p>
+      <p>&nbsp;</p>
+      <p>&nbsp;</p>
+      <p>&nbsp;</p>
+ 	    <p>&nbsp;</p>
+      <p>&nbsp;</p>
+      <p>&nbsp;</p>
+      <p>&nbsp;</p>
+      <p>&nbsp;</p>
+ 	    <p>&nbsp;</p>
+      <p>&nbsp;</p>
+      <p>&nbsp;</p>
+      <p>&nbsp;</p>
+
+
+
+      
+  
+  <a href="#observe"  class="ui-btn ui-btn" >ระบบสังเกตุการณ์และควบคุม</a>
+    <a href="#stat" class="ui-btn ui-btn" >ตรวจสอบสถิติย้อนหลัง</a>
+</div>
+</div>
+
+<!--******************************-->
+
+<div data-role="page" id="observe">
+  <div data-role="header"><div id="test"> Smart Farm</div><a href="#page1">back</a></div>
+    <div data-role="content" class="ui-content">
+
+    <div id="showdata">
+    <div id="back1">
+    โรงเรือนที่ 1 :
+
+    <div class="ui-grid-c" id="cent">
+      <div class="ui-block-a">
+        <div id="back"><p> 50% </p></div>
+        <p> Humid</p>
+      </div>
+      <div class="ui-block-b">
+        <p> 30C </p>
+        <p> Temp</p>
+      </div>
+      <div class="ui-block-c">
+        <p> 80% </p>
+        <p><p><font size="4"> Soil</font></p>
+      </div>
+      <div class="ui-block-d">
+        <p> 60% </p>
+        <p> Light</p>
+      </div>
+    </div>
+    </div>
+
+    <div id="back2">
+    โรงเรือนที่ 2 :
+
+    <div class="ui-grid-c" id="cent">
+      <div class="ui-block-a">
+        <p> 50% </p>
+        <p> Humid</p>
+      </div>
+      <div class="ui-block-b">
+        <p> 20C</p>
+        <p> Temp</p>
+      </div>
+      <div class="ui-block-c">
+        <p> 70% </p>
+        <p><font size="4"> Soil</font></p>
+      </div>
+      <div class="ui-block-d">
+        <p> 40% </p>
+        <p> Light</p>
+      </div>
+    </div>
+    </div>
+
+    </div>
+
+     
+      
+    
+     <div class="ui-grid-a">
+        <div class="ui-block-a">
+        <a href="#" class="ui-btn ui-btn-b" >LIGHT</a>
+     </div>
+    
+     <div class="ui-block-b">
+        <div class="ui-grid-a">
+           <div class="ui-block-a">
+              <a class="ui-btn " onClick="Light_on()">ON</a></div>
+           <div class="ui-block-b">
+            <a  class="ui-btn" onClick="Light_off()">OFF</a></div>
+        </div>
+    </div>
+    </div>
+     
+     
+
+    <div class="ui-grid-a">
+        <div class="ui-block-a">
+        <a href="#" class="ui-btn ui-btn-b" >FAN</a>
+     </div>
+     
+     <div class="ui-block-b">
+        <div class="ui-grid-a">
+           <div class="ui-block-a">
+             <a  class="ui-btn" onClick="Fan_on()">ON</a></div>
+           <div class="ui-block-b">
+             <a  class="ui-btn" onClick="Fan_off()">OFF</a></div>
+      </div>
+     </div>
+     </div>
+
+     <div class="ui-grid-a">
+        <div class="ui-block-a">
+        <a href="#" class="ui-btn ui-btn-b" >WATER</a>
+     </div>
+     
+     <div class="ui-block-b">
+        <div class="ui-grid-a">
+           <div class="ui-block-a">
+             <a  class="ui-btn" onClick="Fan_on()">ON</a></div>
+           <div class="ui-block-b">
+             <a  class="ui-btn" onClick="Fan_off()">OFF</a></div>
+      </div>
+     </div>
+     </div>
+
+     <div class="ui-grid-a">
+        <div class="ui-block-a">
+        <a href="#" class="ui-btn ui-btn-b" >MIST</a>
+     </div>
+     
+     <div class="ui-block-b">
+        <div class="ui-grid-a">
+           <div class="ui-block-a">
+             <a  class="ui-btn" onClick="Fan_on()">ON</a></div>
+           <div class="ui-block-b">
+             <a  class="ui-btn" onClick="Fan_off()">OFF</a></div>
+      </div>
+     </div>
+     </div>
+
+      <div href="" class="cube-switch" id="cube-switch" onclick="switchPress()">
+              <span class="switch">
+              <span class="switch-state off"></span>
+              <span class="switch-state on"></span>
+          </span>
+          </div>
+ </div>
+</div>
+
+<!--******************************-->
+
+<div data-role="page" id="stat">
+	<div data-role="header"><h1>Smart Farm</h1>
+    <a href="#page1">back</a>
+  </div>
+   <div data-role="main" class="ui-content">
+    
+            STAT GRAPH
+    
+   </div>
+</div>
+</body>
+</html>
