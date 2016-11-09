@@ -1,0 +1,318 @@
+<!DOCTYPE html> 
+<html>
+<head>
+<meta charset="utf-8">
+<title>jQuery Mobile Web App</title>
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+<script src="js/microgear.js"></script>
+
+<script>
+  const APPID     = "Nextgenfarm";
+  const APPKEY    = "SQcVvFssnEGjYn1";
+  const APPSECRET = "vBDtCCUbYzRWli8BaoOoZR0tP";
+
+    var microgear = Microgear.create({
+        key: APPKEY,
+        secret: APPSECRET,
+        //alias : "myhtml"         /*  optional  */
+    });
+    function Light_on(){
+            microgear.chat("Back_end_py","Light_ON");
+    }
+    function Light_off(){
+            microgear.chat("Back_end_py","Light_OFF");
+    }
+    function Fan_on(){
+            microgear.chat("Back_end_py","Fan_ON");
+    }
+    function Fan_off(){
+            microgear.chat("Back_end_py","Fan_OFF");
+    }
+    function Water_on(){
+            microgear.chat("Back_end_py","Water_ON");
+    }
+    function Water_off(){
+            microgear.chat("Back_end_py","Water_OFF");
+    }
+    function Mist_on(){
+            microgear.chat("Back_end_py","Mist_ON");
+    }
+    function Mist_off(){
+            microgear.chat("Back_end_py","Mist_OFF");
+    }
+    var temp1,humid1,light1,soil1;
+    var temp2,humid2,light2,soil2;
+
+    microgear.on('message',function(topic,msg) {
+        document.getElementById("data").innerHTML = msg;
+        var split_msg = msg.split(",");
+        temp1=split_msg[0];
+        humid1=split_msg[1];
+        light1=split_msg[2];
+        soil1=split_msg[3];
+    });
+
+    microgear.on('connected', function() {
+        microgear.setname('manual_control');    /* alias can be renamed anytime with this function */
+        document.getElementById("data").innerHTML = "Now I am connected with netpie...";
+        setInterval(function() {
+            microgear.chat("Back_end_py","Hello from myself ");
+        },5000);
+    });
+
+    microgear.on('present', function(event) {
+        console.log(event);
+    });
+
+    microgear.on('absent', function(event) {
+        console.log(event);
+    });
+
+    microgear.connect(APPID);
+</script>
+<style>
+#bg1page{
+background-image: url(img/sf6.jpg);
+background-position: center;
+}
+#test {
+padding-top: 10px;
+padding-bottom: 10px;
+background-color: #272c38;
+color: white;
+border-color: black;
+font-size:36px;
+text-align:center;
+font-family:"Rockwell", Times, serif;
+}
+#cent {
+  text-align: center;
+}
+#decfont {
+  font-size:20px;
+}
+#backpara{
+  background-color:#FFFFFF;
+  border-color: #FFFFFF;
+  
+}
+#backcontent{
+  background-color: #272c38;
+}
+#back1{
+  background-color: #f3726d;
+  color:#ffffff;
+  border-style:none;
+  border-radius: 18px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-right: 30px;
+  padding-left: 30px;
+}
+#back2{
+  background-color: #27aec4;
+  color:white;
+  border-style:none;
+  border-radius: 18px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-right: 30px;
+  padding-left: 30px;
+}
+.head1{
+  background-color: black;
+  color:white;
+}
+@font-face {
+    font-family: 'Rockwell';
+    src: url('fonts/ROCKWELL.eot');
+    src: url('fonts/ROCK.ttf') format('truetype'),
+}
+</style>
+</head> 
+
+<!--*************FIRST PAGE*****************-->
+
+<body> 
+<div data-role="page" id="page1" >
+<div data-role="content" class="ui-content" id="bg1page">
+      <p>&nbsp;</p>
+      <p>&nbsp;</p>
+      <p>&nbsp;</p>
+      <p>&nbsp;</p>
+      <p>&nbsp;</p>
+      <p>&nbsp;</p>
+      <p>&nbsp;</p>
+      <p>&nbsp;</p>
+      <p>&nbsp;</p>
+      <p>&nbsp;</p>
+      <p>&nbsp;</p>
+      <p>&nbsp;</p>
+      <p>&nbsp;</p>
+
+
+
+      
+  
+    <a href="#observe"  data-transition="slide" class="ui-btn" >Observing and Controling</a>
+    <a href="#stat" data-transition="slide" class="ui-btn" >Statistic</a>
+</div>
+</div>
+
+<!--******************************-->
+
+<div data-role="page" id="observe">
+  <div data-role="main"><div id="test"> Observing and Controling</div></div>
+    <div data-role="content" class="ui-content" id="backcontent">
+
+    <div id="decfont">
+    <div id="back1">
+    
+    Greenhouse 1 :
+
+    <div class="ui-grid-c" id="cent">
+      <div class="ui-block-a">
+       <p> 50% </p>
+        <p> Humid</p>
+      </div>
+      <div class="ui-block-b">
+       <p> 30C </p>
+        <p> Temp</p>
+      </div>
+      <div class="ui-block-c">
+         <p> 80% </p>
+        <p><font size="4"> Soil</font></p>
+      </div>
+      <div class="ui-block-d">
+        <p> 60% </p>
+        <p> Light</p>
+      </div>
+    </div>
+    </div>
+    <p></p>
+
+    <div id="back2">
+    Greenhouse 2 :
+
+    <div class="ui-grid-c" id="cent">
+      <div class="ui-block-a">
+        <p> 50% </p>
+        <p> Humid</p>
+      </div>
+      <div class="ui-block-b">
+        <p> 20C</p>
+        <p> Temp</p>
+      </div>
+      <div class="ui-block-c">
+        <p> 70% </p>
+        <p><font size="4"> Soil</font></p>
+      </div>
+      <div class="ui-block-d">
+        <p> 40% </p>
+        <p> Light</p>
+      </div>
+    </div>
+    </div>
+    </div>
+     <p></p>
+
+     
+    <div class="ui-grid-a">
+      <div class="ui-block-a">
+        <a href="#myPopup1" data-rel="popup" class="ui-btn" data-position-to="window" data-transition="slide">Manual control</a>
+        </div>
+      <div class="ui-block-b">
+        <a href="#" class="ui-btn">Auto control</a>
+        </div>
+        <p>&nbsp;</p>
+      <p>&nbsp;</p>
+      <p>&nbsp;</p>
+      <p>&nbsp;</p>
+    </div>
+
+
+    <div data-role="popup" id="myPopup1" class="ui-content">
+     <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+        <div class="ui-grid-a">
+        <div class="ui-block-a">
+        <a href="#" class="ui-btn ui-btn-b" >LIGHT</a>
+     </div>
+    
+     <div class="ui-block-b">
+        <div class="ui-grid-a">
+           <div class="ui-block-a">
+              <a class="ui-btn " onClick="Light_on()">ON</a></div>
+           <div class="ui-block-b">
+            <a  class="ui-btn" onClick="Light_off()">OFF</a></div>
+        </div>
+    </div>
+    </div>
+     
+     
+
+    <div class="ui-grid-a">
+        <div class="ui-block-a">
+        <a href="#" class="ui-btn ui-btn-b" >FAN</a>
+     </div>
+     
+     <div class="ui-block-b">
+        <div class="ui-grid-a">
+           <div class="ui-block-a">
+             <a  class="ui-btn" onClick="Fan_on()">ON</a></div>
+           <div class="ui-block-b">
+             <a  class="ui-btn" onClick="Fan_off()">OFF</a></div>
+      </div>
+     </div>
+     </div>
+
+     <div class="ui-grid-a">
+        <div class="ui-block-a">
+        <a href="#" class="ui-btn ui-btn-b" >WATER</a>
+     </div>
+     
+     <div class="ui-block-b">
+        <div class="ui-grid-a">
+           <div class="ui-block-a">
+             <a  class="ui-btn" onClick="Water_on()">ON</a></div>
+           <div class="ui-block-b">
+             <a  class="ui-btn" onClick="Water_off()">OFF</a></div>
+      </div>
+     </div>
+     </div>
+
+     <div class="ui-grid-a">
+        <div class="ui-block-a">
+        <a href="#" class="ui-btn ui-btn-b" >MIST</a>
+     </div>
+     
+     <div class="ui-block-b">
+        <div class="ui-grid-a">
+           <div class="ui-block-a">
+             <a  class="ui-btn" onClick="Mist_on()">ONNNNNNNN</a></div>
+           <div class="ui-block-b">
+             <a  class="ui-btn" onClick="Mist_off()">OFF</a></div>
+      </div>
+     </div>
+     </div>
+
+      <div href="" class="cube-switch" id="cube-switch" onclick="switchPress()">
+              <span class="switch">
+              <span class="switch-state off"></span>
+              <span class="switch-state on"></span>
+          </span>
+          </div>
+ </div>
+</div>
+</div>
+
+<!--******************-->
+<div data-role="page" id="stat">
+<div data-role="header">Statistic</div>
+<div data-role="main">Content</div>
+<a class="ui-btn" onclick="window.open('https://www.google.co.th/', '_system', 'location=yes'); return false;">HUM</a>
+
+</div>
+</body>
+</html>
